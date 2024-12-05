@@ -1,0 +1,5 @@
+game_init:
+  path: ${RANKING_URL}/games/initialize/
+
+game_read:
+  path: ${RANKING_URL}/games/
