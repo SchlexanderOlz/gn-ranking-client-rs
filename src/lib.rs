@@ -76,6 +76,10 @@ impl RankingClient {
         Ok(self.read(filter, "game_read").await?)
     }
 
+    pub async fn match_init(&self, _match: models::create::Match) -> Result<models::read::Match, Box<dyn std::error::Error>> {
+        Ok(self.create(_match, "match_init").await?)
+    }
+
     fn load_routes(path: PathBuf) -> HashMap<String, models::Route> {
         let content = fs::read_to_string(path).expect("Failed to read routes file");
         let content = Self::substitute_env_vars(content.as_str());
