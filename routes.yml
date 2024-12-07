@@ -6,3 +6,6 @@ game_read:
 
 match_init:
   path: ${RANKING_URL}/matches/add/
+
+player_games_read:
+  path: ${RANKING_URL}/players/games/

@@ -80,6 +80,20 @@ impl RankingClient {
         Ok(self.create(_match, "match_init").await?)
     }
 
+    pub async fn player_games_read(&self, filter: models::filter::PlayerGame) -> Result<Vec<models::read::PlayerGame>, Box<dyn std::error::Error>> {
+        Ok(self.read(filter, "player_games_read").await?)
+    }
+
+    pub async fn player_stars(&self, player_id: &str, game_name: &str, game_mode: &str) -> Result<i32, Box<dyn std::error::Error>> {
+        let filter = models::filter::PlayerGame {
+            player_id: Some(player_id.to_string()),
+            game_name: Some(game_name.to_string()),
+            game_mode: Some(game_mode.to_string()),
+            in_order: Some(true),
+        };
+        Ok(self.player_games_read(filter).await?.first().ok_or_else(|| "Game not found")?.game_stars)
+    }
+
     fn load_routes(path: PathBuf) -> HashMap<String, models::Route> {
         let content = fs::read_to_string(path).expect("Failed to read routes file");
         let content = Self::substitute_env_vars(content.as_str());
