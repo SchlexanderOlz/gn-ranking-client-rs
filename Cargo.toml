@@ -2,6 +2,9 @@
 name = "gn-ranking-client-rs"
 version = "0.1.0"
 edition = "2021"
+description = "Client library for the gamenight ranking service"
+license = "MIT"
+
 
 [dependencies]
 chrono = { version = "0.4.38", features = ["serde"] }
