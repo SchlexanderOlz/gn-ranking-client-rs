@@ -9,3 +9,6 @@ match_init:
 
 player_games_read:
   path: ${RANKING_URL}/players/games/
+
+replay_data:
+  path: ${RANKING_URL}/replay_data/

@@ -1,6 +1,6 @@
 [package]
 name = "gn-ranking-client-rs"
-version = "0.1.0"
+version = "0.1.2"
 edition = "2021"
 description = "Client library for the gamenight ranking service"
 license = "MIT"

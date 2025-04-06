@@ -1,5 +1,6 @@
 pub mod create {
     use serde::Serialize;
+    use serde_json::Value;
 
     #[derive(Serialize)]
     pub struct Game {
@@ -34,6 +35,12 @@ pub mod create {
         pub game_mode: String,
 
         pub player_match_list: Vec<PlayerMatch>,
+    }
+
+    #[derive(Serialize)]
+    pub struct ReplayData {
+        pub match_id: String,
+        pub replay_data: Value
     }
 }
 

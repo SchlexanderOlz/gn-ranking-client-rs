@@ -1,4 +1,4 @@
-use std::{collections::HashMap, env, fs, path::PathBuf};
+use std::{collections::HashMap, env, fs, path::PathBuf, result};
 
 use reqwest;
 use serde::de::DeserializeOwned;
@@ -70,6 +70,10 @@ impl RankingClient {
 
     pub async fn game_init(&self, game: models::create::Game) -> Result<models::read::Game, Box<dyn std::error::Error>> {
         Ok(self.create(game, "game_init").await?)
+    }
+
+    pub async fn match_replay_create(&self, result: models::create::ReplayData) -> Result<models::read::Game, Box<dyn std::error::Error>> {
+        Ok(self.create(result, "replay_data").await?)
     }
 
     pub async fn game_read(&self, filter: models::filter::Game) -> Result<Vec<models::read::Game>, Box<dyn std::error::Error>> {
