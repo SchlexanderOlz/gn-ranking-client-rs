@@ -40,7 +40,7 @@ pub mod create {
     #[derive(Serialize)]
     pub struct ReplayData {
         pub match_id: String,
-        pub replay_data: Value
+        pub replay_data: Value,
     }
 }
 

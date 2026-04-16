@@ -1,0 +1,33 @@
+name: Publish to crates.io
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - Cargo.toml
+      - src/**
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Check version against crates.io
+        id: check
+        run: |
+          LOCAL=$(grep '^version' Cargo.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
+          PUBLISHED=$(curl -sf https://crates.io/api/v1/crates/gn-ranking-client-rs \
+            -H 'User-Agent: github-actions publish-check' \
+            | jq -r '.crate.newest_version // "none"')
+          echo "local=$LOCAL"
+          echo "published=$PUBLISHED"
+          echo "local=$LOCAL" >> "$GITHUB_OUTPUT"
+          echo "published=$PUBLISHED" >> "$GITHUB_OUTPUT"
+          [ "$LOCAL" != "$PUBLISHED" ] && echo "changed=true" >> "$GITHUB_OUTPUT" || echo "changed=false" >> "$GITHUB_OUTPUT"
+
+      - name: Publish
+        if: steps.check.outputs.changed == 'true'
+        run: cargo publish --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
